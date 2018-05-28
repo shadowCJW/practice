@@ -11,8 +11,13 @@ import java.util.List;
 import org.apache.commons.csv.CSVPrinter;
 
 import cn.chenjw.codedemo.bean.User;
-
-public class CsvDemo {
+/**
+ * 下面csv用的是这个包
+ * org.marketcetera.fork
+ * @author Administrator
+ *
+ */
+public class CsvDemo {/*
 
 	public static void main(String[] args) {
 		try {
@@ -50,4 +55,4 @@ public class CsvDemo {
 		
 	}
 
-}
+*/}
