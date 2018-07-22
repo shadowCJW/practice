@@ -99,16 +99,15 @@ public class ExcelUtils {
 	            }
 			}
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}  
     }
     public static void writeExcel(){
     	 Workbook workbook = new XSSFWorkbook();  
          Sheet sheet = workbook.createSheet("0");  
+         
          Row row = sheet.createRow(0);  
          CellStyle cellStyle = workbook.createCellStyle();  
          // 设置这些样式  

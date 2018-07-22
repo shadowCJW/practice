@@ -13,7 +13,7 @@ public class Publish {
 		JAXRSServerFactoryBean jax = new JAXRSServerFactoryBean();
 		jax.setResourceClasses(QueryServiceImpl.class);
 		jax.setResourceProvider(QueryServiceImpl.class, new SingletonResourceProvider(new QueryServiceImpl()));
-		jax.setAddress("http://192.168.0.138:8088/querybook");
+		jax.setAddress("http://127.0.0.1:9999/querybook");
 		jax.create();
 		System.out.println("service start");
 	}
