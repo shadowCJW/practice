@@ -1,0 +1,50 @@
+Stream 使用一种类似用 SQL 语句从数据库查询数据的直观方式来提供一种对 Java 集合运算和表达的高阶抽象。
+将要处理的元素集合看作一种流， 流在管道中传输， 并且可以在管道的节点上进行处理， 比如筛选， 排序，聚合等。
+元素流在管道中经过中间操作（intermediate operation）的处理，最后由最终操作(terminal operation)得到前面处理的结果。
+List<Integer> transactionsIds = 
+widgets.stream()
+             .filter(b -> b.getColor() == RED)
+             .sorted((x,y) -> x.getWeight() - y.getWeight())
+             .mapToInt(Widget::getWeight)
+             .sum();
+
+xx
+数据源 流的来源。 可以是集合，数组，I/O channel， 产生器generator 等。
+聚合操作 类似SQL语句一样的操作， 比如filter, map, reduce, find, match, sorted等。
+Stream操作还有两个基础的特征：
+1、Pipelining: 中间操作都会返回流对象本身。 这样多个操作可以串联成一个管道， 如同流式风格（fluent style）。 这样做可以对操作进行优化， 比如延迟执行(laziness)和短路( short-circuiting)。
+2、内部迭代： 以前对集合遍历都是通过Iterator或者For-Each的方式, 显式的在集合外部进行迭代， 这叫做外部迭代。 Stream提供了内部迭代的方式， 通过访问者模式(Visitor)实现。
+
+在 Java 8 中, 集合接口有两个方法来生成流：
+
+stream() − 为集合创建串行流。
+
+parallelStream() − 为集合创建并行流。
+
+当把一个数据结构包装成 Stream 后，就要开始对里面的元素进行各类操作了。常见的操作可以归类如下。
+Intermediate：
+map (mapToInt, flatMap 等)、 filter、 distinct、 sorted、 peek、 limit、 skip、 parallel、 sequential、 unordered
+
+Terminal：
+forEach、 forEachOrdered、 toArray、 reduce、 collect、 min、 max、 count、 anyMatch、 allMatch、 noneMatch、 findFirst、 findAny、 iterator
+
+Short-circuiting：
+anyMatch、 allMatch、 noneMatch、 findFirst、 findAny、 limit
+
+forEach 是 terminal 操作，因此它执行后，Stream 的元素就被“消费”掉了，你无法对一个 Stream 进行两次 terminal 运算。
+forEach 不能修改自己包含的本地变量值，也不能用 break/return 之类的关键字提前结束循环。
+
+optional	
+peak
+reduce：这个方法的主要作用是把 Stream 元素组合起来。
+
+limit/skip
+limit 返回 Stream 的前面 n 个元素；skip 则是扔掉前 n 个元素（它是由一个叫 subStream 的方法改名而来）。
+
+Stream 有三个 match 方法，从语义上说：
+
+allMatch：Stream 中全部元素符合传入的 predicate，返回 true
+anyMatch：Stream 中只要有一个元素符合传入的 predicate，返回 true
+noneMatch：Stream 中没有一个元素符合传入的 predicate，返回 true
+它们都不是要遍历全部元素才能返回结果。例如 allMatch 只要一个元素不满足条件，就 skip 剩下的所有元素，返回 false。
+
